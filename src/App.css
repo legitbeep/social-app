@@ -6,7 +6,11 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+a{
+  text-decoration: none;
+  color: #FF725E;
+  font-weight: bold;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-float infinite 3s ease-in-out;

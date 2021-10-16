@@ -1,12 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
+import Login from "./Views/Login/Login";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./config/theme";
 
 function App() {
+  
   return (
-    <BrowserRouter>
+    <ThemeProvider theme={theme}>
+    <BrowserRouter >
       <Switch>
-        <Route path="/" exact></Route>
+        <Route path="/" exact>
+          <Login/>
+        </Route>
         <Route path="/home">
           {/* layout */}
           <Route path="/posts" exact>
@@ -21,6 +28,7 @@ function App() {
         </Route>
       </Switch>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
