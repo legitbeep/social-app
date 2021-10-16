@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import useStyles from './styles'
 import GoogleIcon from '@mui/icons-material/Google';
 import image from '../../Images/login.png'
@@ -33,7 +32,7 @@ export default function ComplexGrid() {
            
               <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start",width:"100%"}}>
               <p style={{fontWeight:"700" ,margin:"-10px 0",fontSize:"3em"}}>Get started</p>
-              <p style={{ margin:"10px 0 30px 0px" }}>Don't have an account? <Link to="#">Sign Up</Link></p>
+              <p style={{ margin:"10px 0 30px 0px" }}>Don't have an account? <Link to="signup">Sign Up</Link></p>
 
             </div> 
         

@@ -4,6 +4,7 @@ import "./App.css";
 import Login from "./Views/Login/Login";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./config/theme";
+import Signup from './Views/Signup/Signup'
 
 function App() {
   
@@ -12,7 +13,7 @@ function App() {
     <BrowserRouter >
       <Switch>
         <Route path="/" exact>
-          <Login/>
+         
         </Route>
         <Route path="/home">
           {/* layout */}
@@ -25,6 +26,12 @@ function App() {
         </Route>
         <Route path="/create-post" exact>
           {/* Create posts */}
+        </Route>
+        <Route path="/login" exact>
+          <Login/>
+        </Route>
+        <Route path="/signup" exact>
+          <Signup/>
         </Route>
       </Switch>
     </BrowserRouter>
