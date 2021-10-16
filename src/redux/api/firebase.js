@@ -5,6 +5,7 @@ import "firebase/storage";
 import "firebase/functions";
 
 const config = {
+  
 };
 
 if (!firebase.apps.length) {
