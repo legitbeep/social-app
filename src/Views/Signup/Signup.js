@@ -34,7 +34,14 @@ const Signup = () => {
                       <Button variant="outlined" fullWidth><GoogleIcon />Sign Up with Google</Button>
                       <Divider sx={{width:"100%",margin:"10px"  }}>OR</Divider>
 
-
+                      <Grid container spacing={2} >
+                        <Grid item xs={6} lg={6}>
+                        <TextField  sx={{margin:'10px 0px'}}  id="outlined-basic" label="Display Name" variant="outlined"  fullWidth/>
+                         </Grid>
+                         <Grid item xs={6} lg={6}>
+                        <TextField  sx={{margin:'10px 0px'}}  id="outlined-basic" label="User name" variant="outlined"  fullWidth/>
+                         </Grid>   
+                      </Grid>
 
                       <TextField  id="outlined-basic" sx={{margin:'10px 0px'}} label="Email" variant="outlined"  fullWidth />
                       <TextField  id="outlined-basic" sx={{margin:'10px 0px'}} label="Password" variant="outlined"  fullWidth />
