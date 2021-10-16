@@ -19,19 +19,19 @@ export default function ComplexGrid() {
 
   return (
 
-    
-      <Grid container >
-        <Grid item xs={12} lg={6}>
+      <Grid container>     
+        <Grid item justifyContent='center' alignItems="center"  sx={{minHeight:"100vh"}} container >
+        <Grid item xs={12} md={6}>
 
             <Img alt="complex" src={image} />
           
         </Grid>
-        <Grid item xs={12} lg={6} sx={{padding:"20px",}} container justifyContent='center' alignItems="center">
+        <Grid item xs={12} md={6} sx={{padding:"20px",}} container justifyContent='center' alignItems="center">
            
             <form className={classes.form}>
            
               <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start",width:"100%"}}>
-              <p style={{fontWeight:"700" ,margin:"-10px 0",fontSize:"3em"}}>Get started</p>
+              <p style={{fontWeight:"700" ,margin:"-10px 0",fontSize:"3em"}}>Welcome Back</p>
               <p style={{ margin:"10px 0 30px 0px" }}>Don't have an account? <Link to="signup">Sign Up</Link></p>
 
             </div> 
@@ -49,5 +49,7 @@ export default function ComplexGrid() {
             </form>
         </Grid>
       </Grid>
+      </Grid>
+
   );
 }

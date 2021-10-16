@@ -19,12 +19,13 @@ const Signup = () => {
 
     return (
       <Fragment>
-          <Grid container >
-              <Grid item xs={12} lg={6}>
-                  <Img src={image} />
+          <Grid conaitner>
+          <Grid  item justifyContent='center' alignItems="center"  sx={{minHeight:"100vh"}} container>
+              <Grid item xs={12} md={6}>
+                  <Img src={image} />   
               </Grid>
             
-              <Grid item xs={12} lg={6} container  sx={{padding:"20px",}} container justifyContent='center' alignItems="center">
+              <Grid item xs={12} md={6} container  sx={{padding:"20px",}} container justifyContent='center' alignItems="center">
                   <form  className={classes.form}>
                       <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start",width:"100%"}}>
                           <p style={{fontWeight:"700" ,margin:"-10px 0",fontSize:"3em"}}>Get started</p>
@@ -52,6 +53,7 @@ const Signup = () => {
                   </form>
 
               </Grid>
+          </Grid>
           </Grid>
 
 
