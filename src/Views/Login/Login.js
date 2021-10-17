@@ -6,6 +6,17 @@ import GoogleIcon from '@mui/icons-material/Google';
 import image from '../../images/login.png'
 import { Button, Divider, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
+import Visibility from '@mui/icons-material/Visibility';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
+
+import InputLabel from '@mui/material/InputLabel';
+
+import FormControl from '@mui/material/FormControl';
+
+
 
   const Img = styled('img')({
     margin: 'auto',
@@ -16,6 +27,9 @@ import { Link } from 'react-router-dom';
 
 export default function ComplexGrid() {
     const classes = useStyles();
+    const [showPassword, setShowPassword] = React.useState(false);
+  
+
 
   return (
 
@@ -38,14 +52,27 @@ export default function ComplexGrid() {
         
             <Button variant="outlined" fullWidth><GoogleIcon />Sign In with Google</Button>
             <Divider sx={{width:"100%",margin:"10px"  }}>OR</Divider>
-            <TextField  sx={{margin:'10px 0px'}}  id="outlined-basic" label="Email" variant="outlined"  fullWidth/>
-            <TextField sx={{margin:'10px 0px'}} id="outlined-basic" label="Password" variant="outlined" fullWidth />
+            <TextField  sx={{margin:'10px 0px'}}  label="Email" variant="outlined"  fullWidth/>
+            <FormControl sx={{ m: 1,margin:"10px 0px" }} fullWidth variant="outlined" >
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput 
+                    id="outlined-adornment-password"
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={()=>{setShowPassword(prev=>!prev)}}
+                          edge="end"
+                        >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
             <p style={{ margin:"10px 0 30px 0px",alignSelf:"flex-start"  }}> <Link to="#">Forgot Password</Link></p>
-
-            <Button type="submit" fullWidth>Login</Button>
-
-
-
+           <Button type="submit" fullWidth>Login</Button>
             </form>
         </Grid>
       </Grid>
