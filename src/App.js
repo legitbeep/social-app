@@ -25,7 +25,7 @@ function App() {
             {/* Create posts */}
           </Route>
           <Route path="/login" exact>
-            <Login />
+            <Login/>
           </Route>
           <Route path="/signup" exact>
             <Signup />
