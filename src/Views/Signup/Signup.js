@@ -5,6 +5,13 @@ import image from "../../images/signup.svg";
 import useStyles from "./styles";
 import { Link } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
+import Visibility from '@mui/icons-material/Visibility';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 const Img = styled("img")({
   margin: "auto",
@@ -15,10 +22,11 @@ const Img = styled("img")({
 
 const Signup = () => {
   const classes = useStyles();
+  const [showPassword, setShowPassword] = React.useState(false);
 
   return (
     <Fragment>
-      <Grid conaitner>
+      <Grid container>
         <Grid
           item
           justifyContent="center"
@@ -95,21 +103,55 @@ const Signup = () => {
                 label="Email"
                 variant="outlined"
                 fullWidth
+                type="email"
               />
-              <TextField
-                id="outlined-basic"
-                sx={{ margin: "10px 0px" }}
-                label="Password"
-                variant="outlined"
-                fullWidth
-              />
-              <TextField
-                id="outlined-basic"
-                sx={{ margin: "10px 0px" }}
-                label="Conform Password"
-                variant="outlined"
-                fullWidth
-              />
+              
+            <FormControl sx={{ m: 1,margin:"10px 0px" }} fullWidth variant="outlined" >
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput 
+                    id="outlined-adornment-password"
+                    type={showPassword ? 'text' : 'password'}
+              
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                      
+                          onClick={()=>{setShowPassword(prev=>!prev)}}
+                        
+                          edge="end"
+                        >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  
+                    label="Password"
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1,margin:"10px 0px" }} fullWidth variant="outlined" >
+                  <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
+                  <OutlinedInput 
+                    id="outlined-adornment-password"
+                    type={showPassword ? 'text' : 'password'}
+              
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                      
+                          onClick={()=>{setShowPassword(prev=>!prev)}}
+                        
+                          edge="end"
+                        >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  
+                    label="Confirm Password"
+                  />
+                </FormControl>
+        
+        
               <Button type="submit" fullWidth>
                 SignUp
               </Button>
