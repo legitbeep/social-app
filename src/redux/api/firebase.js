@@ -278,7 +278,7 @@ export const signInWithGoogle = async (history) => {
 };
 
 export const signInWithEmailAndPassword = async (email, password) => {
-  await auth.signInWithEmailAndPassword(email, passwordd);
+  await auth.signInWithEmailAndPassword(email, password);
   return true;
 };
 
