@@ -5,6 +5,7 @@ import Login from "./views/Login/Login";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./config/theme";
 import Signup from "./views/Signup/Signup";
+import Profile from "./views/profile/Profile";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path="/signup" exact>
             <Signup />
+          </Route>
+          <Route path="/profile" exact>
+            <Profile />
           </Route>
         </Switch>
       </BrowserRouter>

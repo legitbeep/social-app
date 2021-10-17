@@ -80,7 +80,7 @@ const Signup = () => {
                 <Grid item xs={6} lg={6}>
                   <TextField
                     sx={{ margin: "10px 0px" }}
-                    id="outlined-basic"
+               
                     label="Display Name"
                     variant="outlined"
                     fullWidth
@@ -89,7 +89,7 @@ const Signup = () => {
                 <Grid item xs={6} lg={6}>
                   <TextField
                     sx={{ margin: "10px 0px" }}
-                    id="outlined-basic"
+                   
                     label="User name"
                     variant="outlined"
                     fullWidth
@@ -98,7 +98,7 @@ const Signup = () => {
               </Grid>
 
               <TextField
-                id="outlined-basic"
+
                 sx={{ margin: "10px 0px" }}
                 label="Email"
                 variant="outlined"
