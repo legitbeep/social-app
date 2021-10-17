@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import useStyles from './styles'
 import GoogleIcon from '@mui/icons-material/Google';
-import image from '../../Images/login.png'
+import image from '../../images/login.png'
 import { Button, Divider, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 
