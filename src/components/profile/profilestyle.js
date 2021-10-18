@@ -6,9 +6,7 @@ const useStyles = makeStyles((theme) => ({
    width:'100%',
    objectFit:"cover",
    height:"100%",
-   [theme.breakpoints.down("md")]:{
-    
-   }
+ 
   },
 
   profileimage:{
@@ -19,16 +17,20 @@ const useStyles = makeStyles((theme) => ({
     marginTop:"-100px",
     marginLeft:"70px",
     border:"8px solid white ", 
-    [theme.breakpoints.down("md")]:{
+    [theme.breakpoints.down("sm")]:{
       width:"20vh",
       height:"20vh",
+      marginTop:"-70px",
+      marginLeft:"30px",
+      border:"6px solid white ", 
 
     
     }
 
     
 
-  }
+  },
+
 
 
   }));
