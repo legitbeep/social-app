@@ -4,26 +4,21 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
-
 import IconButton from '@mui/material/IconButton';
-
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
-import ShareIcon from '@mui/icons-material/Share';
-import CardHeader from '@mui/material/CardHeader';
-
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';import CardHeader from '@mui/material/CardHeader';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { style } from "@mui/system";
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {Link} from 'react-router-dom'
 
 
 export default function TitlebarImageList() {
   return (
- <Container sx={{justifyContent:"center"}}>
+ <div style={{justifyContent:"center",display:"flex" ,flexWrap:"wrap"}} >
 
       {itemData.map((item) => (
    
-       <Card sx={{margin:"5vw"}}>
+       <Card sx={{margin:"5px",maxWidth:"100%",width:"500px",minWidth:"25vw"}} >
          <CardHeader 
         action={
           <IconButton aria-label="settings">
@@ -33,8 +28,13 @@ export default function TitlebarImageList() {
         title="Location"
         subheader="Date"
       />
-      <div>
-         <img src={`${item.img}` }style={{width:"100%" }} />
+         {item.img && <CardMedia
+        component="img"
+        src={`${item.img}` }
+        alt="Paella dish"
+        loading="lazy"
+      />}
+        <div>
          </div>
 
       <CardContent>
@@ -46,10 +46,13 @@ export default function TitlebarImageList() {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
+        <IconButton>
+          <RemoveRedEyeIcon/>
         </IconButton>
+        <Link to="#"><ExpandMoreIcon/></Link>
+        
         </CardActions>
+
 
        </Card>
   
@@ -57,14 +60,13 @@ export default function TitlebarImageList() {
 
    ))}
     
-    </Container>
+    </div>
   );
 
 }
 
 const itemData = [
   {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     title: "Breakfast",
     author: "@bkristastucchio",
     rows: 2,

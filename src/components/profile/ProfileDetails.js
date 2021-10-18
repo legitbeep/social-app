@@ -1,7 +1,7 @@
 import { Divider, Grid, IconButton, Typography } from '@mui/material'
 import React from 'react'
 import UploadedImages from './UploadedImages'
-
+import { Link } from 'react-router-dom';
 import ImageIcon from '@mui/icons-material/Image';
 const ProfileDetails = () => {
     const [value, setValue] = React.useState('recents');
