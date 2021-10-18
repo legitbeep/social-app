@@ -114,10 +114,15 @@ export const neutralizePost = async (uid, pid) => {
 };
 
 // Users API
-export const createUser = async (user) => {
+export const createUser = async (user, userName, displayName) => {
   try {
     await firestore.collection(`${USERS}`).add({
-      ...user,
+      uid: user?.uid,
+      display_name: displayName,
+      email: user?.email,
+      user_name: userName,
+      profile_pic: user?.photoURL,
+      user_bio: "I ❤ social blogs.",
       total_followers: 0,
       total_following: 0,
       total_posts: 0,
@@ -131,12 +136,25 @@ export const createUser = async (user) => {
 
 export const updateUser = async (uid, userData) => {
   try {
-    await firestore.doc(`${USERS}/${uid}`).set(
-      {
-        ...userData,
-      },
-      { merge: true }
-    );
+    const { user_name, display_name, user_bio, profile_pic } = userData;
+    if (user_name) {
+      const user = firestore
+        .collection(`${USERS}`)
+        .where("user_name", "==", user_name);
+      if (!user.exists) {
+        await firestore.doc(`${USERS}/${uid}`).set(
+          {
+            user_name,
+            user_bio,
+            display_name,
+            profile_pic,
+          },
+          { merge: true }
+        );
+      } else {
+        // throw err
+      }
+    }
   } catch (err) {
     console.log(err);
   }
@@ -261,7 +279,7 @@ export const signInWithGoogle = async (history) => {
     } = userCredential;
 
     if (isNewUser) {
-      await createUser(user);
+      await createUser(user, user.email, user.displayName);
 
       history.push({
         pathname: "/home/posts",
@@ -277,9 +295,15 @@ export const signInWithGoogle = async (history) => {
   }
 };
 
-export const signInWithEmailAndPassword = async (email, password) => {
-  await auth.signInWithEmailAndPassword(email, password);
-  return true;
+export const signInWithEmailAndPassword = (email, password) => {
+  auth
+    .signInWithEmailAndPassword(email, password)
+    .then(() => {
+      // redirect to home
+    })
+    .catch((err) => {
+      // display err
+    });
 };
 
 export const signUpWithEmailAndPassword = async (
@@ -288,14 +312,58 @@ export const signUpWithEmailAndPassword = async (
   displayName,
   password
 ) => {
-  const userCredentials = await auth.createUserWithEmailAndPassword(
-    email,
-    password
-  );
-  const { user } = userCredentials;
-  const userData = firestore.doc(`${USERS}/${user.uid}`).get();
-  if (!userData.exists) {
-    await createUser(user);
+  try {
+    const userCredentials = await auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
+    const { user } = userCredentials;
+    const userData = firestore.doc(`${USERS}/${user.uid}`).get();
+    if (!userData.exists) {
+      const existingUser = await firestore
+        .collection(`${USERS}`)
+        .where("user_name", "==", userName);
+      if (!existingUser.exists)
+        user
+          .sendUserEmailVerification()
+          .then(() => {
+            // redirect to landing page
+            createUser(user, userName, displayName);
+          })
+          .catch((err) => {
+            // email expired
+          });
+      else {
+        // throw error
+      }
+    }
+
+    return [false];
+  } catch (err) {
+    switch (err.code) {
+      case "auth/invalid-email":
+        return [true, "Invalid Email"];
+      case "auth/id-token-expired":
+        return [true, "Token expired, Try again"];
+      case "auth/email-already-exists":
+        return [true, "email already in use"];
+      default:
+        return [true, "Something went wrong!"];
+    }
   }
-  return true;
+};
+
+export const isEmailVerified = () => {
+  return auth?.currentUser?.isEmailVerified;
+};
+
+export const resetPassword = async () => {
+  auth
+    .sendPasswordResetEmail(auth?.currentUser?.email)
+    .then(() => {
+      // go to login page
+    })
+    .catch(() => {
+      // error
+    });
 };
