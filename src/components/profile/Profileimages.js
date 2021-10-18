@@ -19,7 +19,7 @@ const Profileimages = () => {
              </Grid>
         <Grid item container sx={{ height:"15vh",}} >
             <img className={classes.profileimage} alt="profile-image" src="https://cdn.shopify.com/s/files/1/0722/9621/products/AcandythemedHalloweenbackground_Fred_LowRes_large.jpg?v=1603360598" />
-            <Grid item container sx={{margin:"50px"}}justifyContent="flex-end">
+            <Grid item container sx={{margin:"1px"}}justifyContent="flex-end">
             <EditProfile />
             </Grid>
             
