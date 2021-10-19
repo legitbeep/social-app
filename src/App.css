@@ -11,6 +11,7 @@ a{
   color: #FF725E;
   font-weight: bold;
 }
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-float infinite 3s ease-in-out;
@@ -25,7 +26,9 @@ a{
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
-
+p{
+  margin: 0;
+}
 .App-link {
   color: rgb(112, 76, 182);
 }

@@ -31,9 +31,12 @@ function App() {
           <Route path="/signup" exact>
             <Signup />
           </Route>
-          <Route path="/profile" exact>
-            <Profile />
+          <Route path="/profile" >
+            <Profile/>
           </Route>
+          <Route exact path="/blog/:title">
+               
+              </Route>
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

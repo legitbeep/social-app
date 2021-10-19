@@ -8,10 +8,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { Grid, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+  Btn:{
+    borderRadius:"50px !important",
+    width:"200px"
+
+  }
+  }));
+
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -19,12 +29,13 @@ export default function FormDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-
+const classes=useStyles()
   return (
+    
       
     <div >
         <div >
-      <Button variant="outlined"  onClick={handleClickOpen}>
+      <Button className={classes.Btn} onClick={handleClickOpen}>
         Edit Profile
       </Button>
       </div>
@@ -33,7 +44,7 @@ export default function FormDialog() {
         <DialogContent>
         <form>
         <Grid container direction="row" alignItems="center" >
-          <Grid item container xs={12} md={6} justifyContent="center" alignItems="center"  >
+          <Grid item container xs={12} justifyContent="center" alignItems="center"  >
           <label htmlFor="icon-button-file">
             
             <input style={{display:'none'}} accept="image/*" id="icon-button-file" type="file" />
@@ -44,14 +55,7 @@ export default function FormDialog() {
           </label>
           </Grid>
           <Grid item container xs={12} md={6} justifyContent="center" alignItems="center"  >
-          <label htmlFor="icon-button-file">
-          
-            <input style={{display:'none'}} accept="image/*" id="icon-button-file" type="file" />
-            <IconButton color="primary" aria-label="upload picture" component="span">
-            <Typography> Background Image </Typography>
-              < PhotoCamera />
-            </IconButton>
-          </label>
+         
           </Grid>
           </Grid>
           <TextField
@@ -63,8 +67,18 @@ export default function FormDialog() {
             fullWidth
             variant="outlined"
           />
+           
           <TextField
-            autoFocus
+            
+            margin="dense"
+            id="name"
+            label="User Name"
+            type="text"
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+          
             margin="dense"
             id="name"
             label="Bio"
@@ -75,7 +89,6 @@ export default function FormDialog() {
             variant="outlined"
           />
            <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Location"
