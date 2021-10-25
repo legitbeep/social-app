@@ -79,12 +79,13 @@ const HomeLayout = (props) => {
                     <NavLink activeClassName={classes.linknav}  className={classes.navlink} to={`${path}/post`} exact><AllInboxIcon sx={{marginRight:"10px"}}/>Posts</NavLink>
                     <NavLink activeClassName={classes.linknav}  className={classes.navlink} to={`${path}/post/latest`}><WatchLaterIcon sx={{marginRight:"10px"}}/>Latest </NavLink>
                     <NavLink activeClassName={classes.linknav}  className={classes.navlink} to={`${path}/post/trending`}><WhatshotIcon sx={{marginRight:"10px"}}/>Trending</NavLink>
-                    <Link to="/profile" style={{margin:"25px 0 0 0"}} ><Button className={classes.btn}>Create post</Button></Link>
+                    <Link to="/createpost" style={{margin:"25px 0 0 0"}} ><Button className={classes.btn}>Create post</Button></Link>
                     <Link to="/login" style={{margin:'25px 0 0 0'}}><Button className={classes.btn}>Login</Button></Link>
                 </div>
                 </div>
             </Grid>
-            <Grid item container xs={12} md={9}  justifyContent="center">
+            <Grid item container xs={12} md={9} justifyContent="center">
+
             {props.children}
 
             </Grid>

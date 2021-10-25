@@ -76,7 +76,7 @@ const ProfileLayout = (props) => {
                          {/* <NavLink to={`${path}/notifications`} className={classes.navlink}  exact activeClassName={classes.linknav}>Notifications</NavLink> */}
                          <NavLink to={`${path}/followers`} className={classes.navlink}  exact activeClassName={classes.linknav}>Followers</NavLink>
                          <NavLink to={`${path}/following`} className={classes.navlink}  exact activeClassName={classes.linknav}>Following</NavLink>
-                         <NavLink to={`${path}/saved-posts`} className={classes.navlink}  exact activeClassName={classes.linknav}><BookmarksIcon sx={{marginRight:"10px"}}/>Saved Posts</NavLink>
+                         <NavLink to={`${path}/saved-posts`} className={classes.navlink}  exact activeClassName={classes.linknav}><BookmarksIcon sx={{marginRight:"10px"}}t/>Saved Posts</NavLink>
                          <NavLink to={`${path}/explore`} className={classes.navlink} exact activeClassName={classes.linknav}><TravelExploreIcon sx={{marginRight:"10px"}}/>Explore</NavLink>
                      </div>
 
@@ -85,7 +85,7 @@ const ProfileLayout = (props) => {
                      </div>
 
                 </Grid>
-                <Grid item container xs={12} md={8} justifyContent="center">
+                <Grid item container xs={12} md={9} justifyContent="center">
                 {props.children}
                
                 

@@ -7,6 +7,8 @@ import theme from "./config/theme";
 import Signup from "./views/Signup/Signup";
 import Profile from "./views/profile/Profile";
 import Home from "./views/home/Home";
+import CreatePost from './views/createpost/CreatePost'
+import Blog from "./views/blog/Blog";
 
 function App() {
   return (
@@ -26,11 +28,12 @@ function App() {
           <Route path="/profile" >
             <Profile/>
           </Route>
-          <Route exact path="/blog/:title">
-               
+          <Route exact path="/blog/:id">
+               <Blog/>
               </Route>
           
           <Route path="/home" ><Home/></Route>
+          <Route path="/createpost"><CreatePost/></Route>
           
           <Route path="*">Not Found</Route>
         </Switch>

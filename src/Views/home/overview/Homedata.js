@@ -100,11 +100,10 @@ const Homedata = () => {
     return (
         <>
         
-        <div style={{display:"flex" ,flexDirection:"column"}}>      
-        <Divider><p style={{fontWeight:"500",fontSize:"25px" ,color:"#FF725E"}}>Home</p></Divider>
+
 
            <Post itemData={itemData} /> 
-           </div>
+          
         </>
     )
 }

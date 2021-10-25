@@ -99,11 +99,9 @@ const itemData = [
 const TrendingPosts = () => {
     return (
         <>
-             <div style={{display:"flex" ,flexDirection:"column"}}>      
-          <Divider><p style={{fontWeight:"500",fontSize:"25px" ,color:"#FF725E"}}>Hot/Trending</p></Divider>
 
          <Post itemData={itemData} /> 
-         </div>
+     
         </>
     )
 }

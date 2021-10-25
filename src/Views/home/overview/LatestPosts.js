@@ -99,11 +99,10 @@ const itemData = [
 const LatestPosts = () => {
     return (
         <>
-             <div style={{display:"flex" ,flexDirection:"column"}}>      
-            <Divider><p style={{fontWeight:"500",fontSize:"25px" ,color:"#FF725E"}}>Latest Posts</p></Divider>
+            
 
               <Post itemData={itemData} /> 
-         </div>
+        
         </>
     )
 }
