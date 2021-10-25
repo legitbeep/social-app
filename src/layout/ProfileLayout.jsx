@@ -6,6 +6,9 @@ import { Button } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import { NavLink,useRouteMatch } from 'react-router-dom'
 
+import AllInboxIcon from '@mui/icons-material/AllInbox';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
 
 const useStyles = makeStyles((theme) => ({
   btn:{
@@ -64,11 +67,13 @@ const ProfileLayout = (props) => {
                     </div>
                       */}
                      <div style={{display:"flex" ,flexDirection:"column",fontSize:"25px" ,margin:"15px 0",textAlign:"justify"  }}>
-                         <NavLink to={`${path}`} className={classes.navlink} exact activeClassName={classes.linknav}>Posts</NavLink>
-                         <NavLink to={`${path}/notifications`} className={classes.navlink}  exact activeClassName={classes.linknav}>Notifications</NavLink>
+                         <NavLink to={`${path}`} className={classes.navlink} exact activeClassName={classes.linknav}><AllInboxIcon sx={{marginRight:"10px"}}/>Posts</NavLink>
+                         {/* <NavLink to={`${path}/notifications`} className={classes.navlink}  exact activeClassName={classes.linknav}>Notifications</NavLink> */}
                          <NavLink to={`${path}/followers`} className={classes.navlink}  exact activeClassName={classes.linknav}>Followers</NavLink>
-                         <NavLink to={`${path}/saved-posts`} className={classes.navlink}  exact activeClassName={classes.linknav}>Saved Posts</NavLink>
-                         <NavLink to={`${path}/explore`} className={classes.navlink} exact activeClassName={classes.linknav}>Explore</NavLink>
+                         <NavLink to={`${path}/following`} className={classes.navlink}  exact activeClassName={classes.linknav}>Following</NavLink>
+                         <NavLink to={`${path}/saved-posts`} className={classes.navlink}  exact activeClassName={classes.linknav}><BookmarksIcon sx={{marginRight:"10px"}}t/>Saved Posts</NavLink>
+                         <NavLink to={`${path}/explore`} className={classes.navlink} exact activeClassName={classes.linknav}><TravelExploreIcon sx={{marginRight:"10px"}}/>Explore</NavLink>
+
                      </div>
 
                     
@@ -76,7 +81,7 @@ const ProfileLayout = (props) => {
                      </div>
 
                 </Grid>
-                <Grid item container xs={12} md={8} justifyContent="center">
+                <Grid item container xs={12} md={9} justifyContent="center">
                 {props.children}
                
                 
