@@ -5,6 +5,7 @@ import EditProfile from '../components/profile/EditProfile'
 import { Button } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import { NavLink,useRouteMatch } from 'react-router-dom'
+
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
@@ -16,17 +17,11 @@ const useStyles = makeStyles((theme) => ({
 
   },
   navlink:{
-      margin:"20px",
+      margin:"5px",
     '&:hover' : {
      
         opacity: "0.5"
-      },
-      display:"flex" 
-        ,flexDirection:"row",
-        fontWeight:"500",
-        
-         textAlign:"justify"
-         ,alignItems:"center" 
+      }
 
       
   },
@@ -78,6 +73,7 @@ const ProfileLayout = (props) => {
                          <NavLink to={`${path}/following`} className={classes.navlink}  exact activeClassName={classes.linknav}>Following</NavLink>
                          <NavLink to={`${path}/saved-posts`} className={classes.navlink}  exact activeClassName={classes.linknav}><BookmarksIcon sx={{marginRight:"10px"}}t/>Saved Posts</NavLink>
                          <NavLink to={`${path}/explore`} className={classes.navlink} exact activeClassName={classes.linknav}><TravelExploreIcon sx={{marginRight:"10px"}}/>Explore</NavLink>
+
                      </div>
 
                     
