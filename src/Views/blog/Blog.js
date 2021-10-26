@@ -11,11 +11,10 @@ import IconButton from '@mui/material/IconButton';
 import { FormatUnderlined } from '@mui/icons-material';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import FormControl from '@mui/material/FormControl';
-
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { padding } from '@mui/system';
+import Commentcard from '../../components/comment/Commentcard'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -123,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     
       },
       comment:{
-
+        margin:"30px 0"
       }
   }));
 const itemData = 
@@ -206,7 +205,8 @@ const Blog = () => {
                 </div>
                 </form>
                 <div class={classes.comment}>
-                    <p>{itemData.comments}</p>
+                    
+                    <Commentcard comments={itemData.comments}/>
                 </div>
 
 
