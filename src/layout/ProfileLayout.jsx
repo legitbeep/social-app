@@ -21,7 +21,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover' : {
      
         opacity: "0.5"
-      }
+      },
+    fontWeight:"500",
+    
+
 
       
   },
