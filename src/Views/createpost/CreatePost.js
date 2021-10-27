@@ -1,22 +1,20 @@
 import React,{useState} from 'react'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import blog from '../../images/blog.svg'
 import { TagsInput } from "react-tag-input-component";
-
+import TextEditor from '../../components/textEditor/TextEditor';
 
 const useStyles = makeStyles((theme) => ({
   bloging:{
     [theme.breakpoints.down("md")]:{
-     display:"none"
+     display:"none",
+   
     
   },
   },
@@ -73,21 +71,22 @@ const CreatePost = () => {
             fullWidth
             variant="outlined"
           />
-          
+                
            
       
           <TextField
           
             margin="dense"
             id="desc"
-            label="Description"
+            label="Basic Description About blog"
             multiline
-            rows={25}
+            rows={10}
             type="text"
             fullWidth
             variant="outlined"
 
           />
+          <TextEditor/>
         <div style={{color:"#FF725E",width:"100%"}}>
         <TagsInput
         value={selected}
@@ -107,6 +106,7 @@ const CreatePost = () => {
           </form>
           
         </div>
+  
         </div>
     )
 }
