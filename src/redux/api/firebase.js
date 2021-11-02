@@ -6,7 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { getFirestore, Timestamp, FieldValue } from "firebase/firestore";
+import { getFirestore, FieldValue } from "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyD9703msQFncIRY6nu5gcoVEuy6j_wJ6vg",
