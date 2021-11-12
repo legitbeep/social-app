@@ -5,17 +5,17 @@ import useStyles from './styles'
 import GoogleIcon from '@mui/icons-material/Google';
 import image from '../../images/login.png'
 import { Button, Divider, TextField } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OutlinedInput from '@mui/material/OutlinedInput';
-
+import {authActions} from '../../redux/api/auth'
 import InputLabel from '@mui/material/InputLabel';
+import { useDispatch,useSelector } from 'react-redux';
 
 import FormControl from '@mui/material/FormControl';
-
 
 
   const Img = styled('img')({
@@ -26,9 +26,12 @@ import FormControl from '@mui/material/FormControl';
   });
 
 export default function ComplexGrid() {
+  const history=useHistory();
     const classes = useStyles();
     const [showPassword, setShowPassword] = React.useState(false);
-  
+
+    const dispatch = useDispatch();
+
 
 
   return (
@@ -50,7 +53,7 @@ export default function ComplexGrid() {
 
             </div> 
         
-            <Button variant="outlined" fullWidth><GoogleIcon />Sign In with Google</Button>
+            <Button variant="outlined" fullWidth onClick={dispatch(authActions())}><GoogleIcon />Sign In with Google</Button>
             <Divider sx={{width:"100%",margin:"10px"  }}>OR</Divider>
             <TextField  sx={{margin:'10px 0px'}}  label="Email" variant="outlined"  fullWidth/>
             <FormControl sx={{ m: 1,margin:"10px 0px" }} fullWidth variant="outlined" >
