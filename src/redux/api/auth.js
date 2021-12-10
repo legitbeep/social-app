@@ -1,27 +1,30 @@
-import {createAsyncThunk,createSlice} from '@reduxjs/toolkit'
-import {signInWithGoogle ,signInWithEmailAndPassword} from './firebase'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { signInWithGoogle, signInWithEmailAndPassword } from "./firebase";
 
+export const loginGoogle = createAsyncThunk("user/login", async (history) => {
+  const response = await signInWithGoogle(history);
+  console.log(response);
+  return response.data || null;
+});
+const auth = createSlice({
+  name: "auth",
+  initialState: { user: null },
+  reducer: {
+    logout: (state) => {
+      state.user = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginGoogle.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(loginGoogle.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.user = action.payload;
+      });
+  },
+});
 
-
-
-const loginGoogle = createAsyncThunk(
-    '',
-    async () => {
-      const response = await signInWithGoogle()
-      return response.data
-    }
-  )
-const auth=createSlice({
-    name:"counter",
-    extraReducers: (builder) => {
-        // Add reducers for additional action types here, and handle loading state as needed
-        builder.addCase(loginGoogle.fulfilled, (state, action) => {
-          // Add user to the state array
-          state.entities.push(action.payload)
-        })
-      },
-
-})
-
-export const authActions=auth.actions;
-export  default auth.reducer
+export const authActions = auth.actions;
+export default auth.reducer;

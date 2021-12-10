@@ -1,12 +1,20 @@
 import { initializeApp } from "firebase/app";
-import { collection, getDocs } from "firebase/firestore/lite";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { getFirestore, FieldValue } from "firebase/firestore";
+import {
+  getFirestore,
+  FieldValue,
+  doc,
+  collection,
+  addDoc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyD9703msQFncIRY6nu5gcoVEuy6j_wJ6vg",
@@ -20,11 +28,16 @@ const config = {
 const firebase = initializeApp(config);
 
 export const auth = getAuth();
-export const firestore = getFirestore();
+export const db = getFirestore();
+//auth.languageCode = "it"
+// To apply the default browser preference instead of explicitly setting it.
+// firebase.auth().useDeviceLanguage();
 
 // PATHS
 const POSTS = `v1/social-app/posts`;
 const USERS = `v1/social-app/users`;
+const USERS_COL = collection(db, `v1/social-app/users`);
+const POSTS_COL = collection(db, `v1/social-app/posts`);
 
 // Posts API
 export const getAllPosts = async () => {
@@ -33,8 +46,8 @@ export const getAllPosts = async () => {
 };
 
 export const getPost = async (pid) => {
-  const post = await getDocs(`${POSTS}/${pid}`).get();
-  await getDocs(`${POSTS}/${pid}`).set(
+  const post = await doc(`${POSTS}/${pid}`).get();
+  await doc(`${POSTS}/${pid}`).set(
     {
       total_reads: FieldValue.increment(1),
     },
@@ -52,9 +65,9 @@ export const createPost = async (uid, post) => {
       total_reads: 0,
       total_comments: 0,
       image: null,
-      posted_at: FieldValue.serverTimestamp(),
+      posted_at: serverTimestamp(),
     });
-    await getDocs(`${USERS}/${uid}/total_posts`).set(
+    await doc(`${USERS}/${uid}/total_posts`).set(
       {
         total_posts: FieldValue.increment(1),
       },
@@ -67,10 +80,10 @@ export const createPost = async (uid, post) => {
 
 export const updatePost = async (uid, pid, postData) => {
   try {
-    await getDocs(`${POSTS}/${pid}`).set(
+    await doc(`${POSTS}/${pid}`).set(
       {
         ...postData,
-        updated_on: FieldValue.serverTimestamp(),
+        updated_on: serverTimestamp(),
       },
       { merge: true }
     );
@@ -80,7 +93,7 @@ export const updatePost = async (uid, pid, postData) => {
 };
 
 export const likePost = async (uid, pid) => {
-  await getDocs(`${POSTS}/${pid}`).set(
+  await doc(`${POSTS}/${pid}`).set(
     {
       total_likes: FieldValue.increment(1),
       likes_by: FieldValue.arrayUnion(uid),
@@ -90,7 +103,7 @@ export const likePost = async (uid, pid) => {
 };
 
 export const dislikePost = async (uid, pid) => {
-  await getDocs(`${POSTS}/${pid}`).set(
+  await doc(`${POSTS}/${pid}`).set(
     {
       total_dislikes: FieldValue.increment(-1),
       dislikes_by: FieldValue.arrayUnion(uid),
@@ -100,7 +113,7 @@ export const dislikePost = async (uid, pid) => {
 };
 
 export const neutralizePost = async (uid, pid) => {
-  const postData = await getDocs(`${POSTS}/${pid}`).get();
+  const postData = await doc(`${POSTS}/${pid}`).get();
   let likes_by = [],
     dislikes_by = [];
   try {
@@ -109,7 +122,7 @@ export const neutralizePost = async (uid, pid) => {
     } else if (postData.dislikes_by?.includes(uid)) {
       dislikes_by = postData.likes_by.filter((userId) => userId != uid);
     }
-    await getDocs(`${POSTS}/${pid}`).set(
+    await doc(`${POSTS}/${pid}`).set(
       {
         total_likes: likes_by.length,
         total_dislikes: dislikes_by.length,
@@ -123,8 +136,9 @@ export const neutralizePost = async (uid, pid) => {
 
 // Users API
 export const createUser = async (user, userName, displayName) => {
+  console.log("CREATING USER...");
   try {
-    await collection(`${USERS}`).add({
+    await setDoc(doc(db, `${USERS}/${user.uid}`), {
       uid: user?.uid,
       display_name: displayName,
       email: user?.email,
@@ -135,7 +149,7 @@ export const createUser = async (user, userName, displayName) => {
       total_following: 0,
       total_posts: 0,
       posts: [],
-      created_at: FieldValue.serverTimestamp(),
+      created_at: serverTimestamp(),
     });
   } catch (err) {
     console.log(err);
@@ -146,11 +160,11 @@ export const updateUser = async (uid, userData) => {
   try {
     const { user_name, display_name, user_bio, profile_pic } = userData;
     if (user_name) {
-      const user = firestore
+      const user = db
         .collection(`${USERS}`)
         .where("user_name", "==", user_name);
-      if (!user.exists) {
-        await getDocs(`${USERS}/${uid}`).set(
+      if (!user.exists()) {
+        await doc(`${USERS}/${uid}`).set(
           {
             user_name,
             user_bio,
@@ -173,11 +187,18 @@ export const getAllUsers = async () => {
   return users.docs.map((user) => ({ id: user.id, ...user.data() }));
 };
 
+export const getUser = async (uid) => {
+  const userRef = doc(db, USERS + "/" + uid);
+  const user = await getDoc(userRef);
+  if (user.exists()) return user.data();
+  else return null;
+};
+
 export const getCurrentUser = async () => {
-  const userRef = getDocs(`v1/social-app/users/${auth.currentUser?.uid}`);
+  const userRef = doc(`v1/social-app/users/${auth.currentUser?.uid}`);
   const snapshot = await userRef.get();
 
-  if (snapshot.exists) {
+  if (snapshot.exists()) {
     const userData = snapshot.data();
     return userData;
   }
@@ -194,18 +215,17 @@ export const postComment = async (pid, commentData) => {
     total_dislikes: 0,
     likes_by: [],
     dislikes_by: [],
-    comment_at: FieldValue.serverTimestamp(),
+    comment_at: serverTimestamp(),
   });
-  await getDocs(`${POSTS}/${pid}`).set(
-    {
-      total_comments: FieldValue.increment(1),
-    },
+  await setDoc(
+    doc(db, `${POSTS}/${pid}`),
+    { total_comments: FieldValue.increment(1) },
     { merge: true }
   );
 };
 
 export const getComments = async (pid) => {
-  const comments = await firestore
+  const comments = await db
     .collection(`${POSTS}/${pid}/comments`)
     .orderBy("comment_at")
     .get();
@@ -216,11 +236,11 @@ export const getComments = async (pid) => {
 };
 
 export const updateComment = async (uid, pid, cid, commentData) => {
-  await getDocs(`${POSTS}/${pid}/comments/${cid}`).set(
+  await doc(`${POSTS}/${pid}/comments/${cid}`).set(
     {
       ...commentData,
       comment_by: uid,
-      updated_on: FieldValue.serverTimestamp(),
+      updated_on: serverTimestamp(),
     },
     { merge: true }
   );
@@ -228,7 +248,7 @@ export const updateComment = async (uid, pid, cid, commentData) => {
 
 // Replies API
 export const getReplies = async (pid, cid) => {
-  const replies = await firestore
+  const replies = await db
     .collection(`${POSTS}/${pid}/comments/${cid}/replies`)
     .orderBy("reply_at")
     .get();
@@ -247,12 +267,12 @@ export const postReply = async (pid, cid, uid, reply, rid) => {
     dislikes_by: [],
   };
   if (rid) {
-    await getDocs(`${POSTS}/${pid}/comments/${cid}/replies/${rid}`).set(
+    await doc(`${POSTS}/${pid}/comments/${cid}/replies/${rid}`).set(
       {
         replies: FieldValue.arrayUnion({
           ...reply,
           ...initData,
-          reply_at: FieldValue.serverTimestamp(),
+          reply_at: serverTimestamp(),
         }),
       },
       { merge: true }
@@ -261,10 +281,10 @@ export const postReply = async (pid, cid, uid, reply, rid) => {
     await collection(`${POSTS}/${pid}/comments/${cid}/replies`).add({
       ...reply,
       ...initData,
-      reply_at: FieldValue.serverTimestamp(),
+      reply_at: serverTimestamp(),
     });
   }
-  await getDocs(`${POSTS}/${pid}/comments/${cid}`).set(
+  await doc(`${POSTS}/${pid}/comments/${cid}`).set(
     {
       total_replies: FieldValue.increment(1),
     },
@@ -279,21 +299,16 @@ provider.setCustomParameters({ prompt: "select_account" });
 
 export const signInWithGoogle = async (history) => {
   try {
-    const userCredential = await signInWithPopup(provider);
-
-    const {
-      user,
-      additionalUserInfo: { isNewUser },
-    } = userCredential;
-
-    if (isNewUser) {
+    const response = await signInWithPopup(auth, provider);
+    const { user } = response;
+    console.log("USER", user, await getUser(user.uid));
+    if (!(await getUser(user.uid))) {
       await createUser(user, user.email, user.displayName);
-
       history.push({
         pathname: "/home/posts",
       });
     }
-    return true;
+    return user;
   } catch (err) {
     if (err.code === "auth/network-request-failed") {
       // notification
@@ -326,12 +341,12 @@ export const signUpWithEmailAndPassword = async (
       password
     );
     const { user } = userCredentials;
-    const userData = getDocs(`${USERS}/${user.uid}`).get();
-    if (!userData.exists) {
-      const existingUser = await firestore
+    const userData = doc(`${USERS}/${user.uid}`).get();
+    if (!userData.exists()) {
+      const existingUser = await db
         .collection(`${USERS}`)
         .where("user_name", "==", userName);
-      if (!existingUser.exists)
+      if (!existingUser.exists())
         user
           .sendUserEmailVerification()
           .then(() => {
